@@ -13,30 +13,21 @@ import {
   } from 'react-navigation'
 import { CATEGORIES } from '../data/dummy-data';
 import Category from '../models/Category'
-
+import CategoryGridTile from '../components/CategoryGridTile'
 interface CategoriesScreenT{
     navigation: NavigationScreenProp<NavigationState, NavigationParams>
 }
 
 const CategoriesScreen = (props: CategoriesScreenT) => {
   const renderGridItem = (itemData: {item: Category})=> {
-    return (
-      <TouchableOpacity
-        style={styles.gridItem}
-        onPress={() => {
-          props.navigation.navigate({ 
-              routeName: 'CategoryMeals',
-              params: {
-                  categoryId: itemData.item.id
-              } 
+    return <CategoryGridTile color={itemData.item.color} title={itemData.item.title} onSelect={() => {
+        props.navigation.navigate({ 
+            routeName: 'CategoryMeals',
+            params: {
+                categoryId: itemData.item.id
+            } 
             });
-        }}
-      >
-        <View>
-          <Text>{itemData.item.title}</Text>
-        </View>
-      </TouchableOpacity>
-    );
+        }} />
   };
 
   return (
@@ -58,11 +49,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center'
-  },
-  gridItem: {
-    flex: 1,
-    margin: 15,
-    height: 150
   }
 });
 
