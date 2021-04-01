@@ -1,51 +1,75 @@
-import React from 'react'
+import React from 'react';
+import {
+  View,
+  Text,
+  FlatList,
+  StyleSheet,
+  TouchableOpacity,
+  Platform
+} from 'react-native';
 import {
     NavigationParams,
     NavigationScreenProp,
     NavigationState,
   } from 'react-navigation'
-import { View, Text, StyleSheet, Button, FlatList, TouchableOpacity, Platform} from 'react-native'
-import { CATEGORIES } from '../data/dummy-data'
+import { CATEGORIES } from '../data/dummy-data';
 import Category from '../models/Category'
+
+import Colors from '../constants/Colors';
 interface CategoriesScreenT{
-    navigationOptions?: Object,
     navigation: NavigationScreenProp<NavigationState, NavigationParams>
 }
-interface NavStatelessComponent extends React.StatelessComponent {
-    navigationOptions?: Object
-    navigation: NavigationScreenProp<NavigationState, NavigationParams>
 
-}
-
-const CategoriesScreen: React.StatelessComponent<CategoriesScreenT>  = ({navigation}): JSX.Element => {
-    const renderGridItem = (itemData: {item: Category}) => {
-        return ( 
-            <TouchableOpacity
-                style={styles.gridItem}
-                onPress={() => {
-                    navigation.navigate({routeName: 'CategoryMeals'})
-                }}>
-                <View >
-                    <Text>{itemData.item.title}</Text>
-                </View>
-            </TouchableOpacity>)
-    }
+const CategoriesScreen = (props: CategoriesScreenT) => {
+  const renderGridItem = (itemData: {item: Category})=> {
     return (
-        <FlatList numColumns={2} renderItem={renderGridItem} data={CATEGORIES} />
-       
-    )
-}
+      <TouchableOpacity
+        style={styles.gridItem}
+        onPress={() => {
+          props.navigation.navigate({ 
+              routeName: 'CategoryMeals',
+              params: {
+                  categoryId: itemData.item.id
+              } 
+            });
+        }}
+      >
+        <View>
+          <Text>{itemData.item.title}</Text>
+        </View>
+      </TouchableOpacity>
+    );
+  };
+
+  return (
+    <FlatList
+      keyExtractor={(item, index) => item.id}
+      data={CATEGORIES}
+      renderItem={renderGridItem}
+      numColumns={2}
+    />
+  );
+};
+
+CategoriesScreen.navigationOptions = {
+  headerTitle: 'Meal Categories',
+  headerStyle: {
+    backgroundColor: Platform.OS === 'android' ? Colors.primaryColor : ''
+  },
+  headerTintColor: Platform.OS === 'android' ? 'white' : Colors.primaryColor
+};
 
 const styles = StyleSheet.create({
-    screen: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center'
-    },
-    gridItem: {
-        flex: 1,
-        margin: 15
-    }
-})
+  screen: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  gridItem: {
+    flex: 1,
+    margin: 15,
+    height: 150
+  }
+});
 
-export default CategoriesScreen
+export default CategoriesScreen;

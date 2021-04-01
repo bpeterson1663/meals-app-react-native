@@ -1,4 +1,5 @@
-export const Colors = {
+export default {
     primaryColor: '#4a148c',
-    secondaryColor: '#ff600'
-}
+    accentColor: '#ff6f00'
+  };
+  
