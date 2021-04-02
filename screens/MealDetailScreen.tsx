@@ -1,10 +1,23 @@
 import React from 'react'
 import { View, Text, StyleSheet} from 'react-native'
+import {
+    NavigationParams,
+    NavigationScreenProp,
+    NavigationState,
+  } from 'react-navigation'
+import { MEALS } from '../data/dummy-data'
 
-const MealDetailScreen: React.FC  = (): JSX.Element => {
+interface MealDetailScreenT {
+    navigation: NavigationScreenProp<NavigationState, NavigationParams>
+}
+
+const MealDetailScreen = (props: MealDetailScreenT): JSX.Element => {
+    const mealIdParam = props.navigation.getParam('mealId')
+    const meal = MEALS.find(meal => meal.id === mealIdParam)
     return (
         <View style={styles.screen}>
             <Text>Meal Details Screen</Text>
+            <Text>{meal?.title}</Text>
         </View>
     )
 }

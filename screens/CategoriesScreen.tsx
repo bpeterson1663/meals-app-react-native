@@ -15,7 +15,7 @@ import { CATEGORIES } from '../data/dummy-data';
 import Category from '../models/Category'
 import CategoryGridTile from '../components/CategoryGridTile'
 interface CategoriesScreenT{
-    navigation: NavigationScreenProp<NavigationState, NavigationParams>
+    navigation: NavigationScreenProp<NavigationState, NavigationParams>,
 }
 
 const CategoriesScreen = (props: CategoriesScreenT) => {
@@ -26,7 +26,7 @@ const CategoriesScreen = (props: CategoriesScreenT) => {
             params: {
                 categoryId: itemData.item.id
             } 
-            });
+        });
         }} />
   };
 

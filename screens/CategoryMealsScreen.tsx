@@ -14,7 +14,14 @@ interface CategoryMealsScreenT {
 }
 const CategoryMealsScreen = (props: CategoryMealsScreenT) => {
     const renderMealItem = (itemData: {item: Meal}) => {
-        return <MealItem title={itemData.item.title} onSelect={() => {}} duration={itemData.item.duration} affordability={itemData.item.affordability} complexity={itemData.item.complexity} image={itemData.item.imageUrl} />
+        return <MealItem title={itemData.item.title} onSelect={() => {
+            props.navigation.navigate({
+                routeName: 'MealDetail',
+                params: {
+                    mealId: itemData.item.id
+                }
+            })
+        }} duration={itemData.item.duration} affordability={itemData.item.affordability} complexity={itemData.item.complexity} image={itemData.item.imageUrl} />
     }
     const catId = props.navigation.getParam('categoryId')
     const displayedMeals = MEALS.filter(meal => meal.categoryIds.indexOf(catId) >= 0)
