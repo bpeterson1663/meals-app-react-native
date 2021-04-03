@@ -22,6 +22,14 @@ const MealDetailScreen = (props: MealDetailScreenT): JSX.Element => {
     )
 }
 
+MealDetailScreen.navigationOptions = (navigationData: MealDetailScreenT) => {
+
+    const mealIdParam = navigationData.navigation.getParam('mealId')
+    const meal = MEALS.find(meal => meal.id === mealIdParam)
+    return {
+        headerTitle: meal?.title,
+    }
+}
 const styles = StyleSheet.create({
     screen: {
         flex: 1,
